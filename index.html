@@ -201,14 +201,7 @@
           console.log("Now Printing !");
           console.log("this is what we have received for printing :"+tag);
           
-    const zplBarCodeCommand = `^XA
-^FO250,20^CF0,40^FD^FDEGPAF-MALAWI^FS
-^FO80,120^BY2
-^BCN,100,Y,N,N
-^FD${tag}^FS
-^FO80,240^A0N,30,30^FH\^FDTag:${tag}^FS
-^XZ
-`;
+    const zplBarCodeCommand = `^XA^FO250,20^CF0,40^FD^FDEGPAF-MALAWI^FS^FO80,120^BY2^BCN,100,Y,N,N^FD${tag}^FS^FO80,240^A0N,30,30^FH\^FDTag:${tag}^FS^XZ`;
                      
 
     // Structure of Code taken from ASSETBOX
