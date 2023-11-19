@@ -137,13 +137,15 @@
           
           const tag = tagInput.value;
            
-          if (tag.trim() === '') {
-              alert('Please provide ta-id');
-              return; // Stop further processing if a required field is empty
+          if (tag) {
+            console.log("tag not empty")
+            printCSV(tag)
+              
             }
 
           else{
-            printCSV(tag)
+            alert('Please provide ta-id');
+            return; // Stop further processing if a required field is empty
           }
           
 
