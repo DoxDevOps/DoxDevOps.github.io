@@ -133,20 +133,11 @@
 
         function printSingleTag()
         {
+          console.log("now in printing function")
           const tagInput =  document.getElementById("tagInput");
           
           const tag = tagInput.value;
-           
-          if (tag) {
-            console.log("tag not empty")
-            printCSV(tag)
-              
-            }
-
-          else{
-            alert('Please provide ta-id');
-            return; // Stop further processing if a required field is empty
-          }
+          printCSV(tag)          
           
 
         }
