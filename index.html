@@ -80,26 +80,6 @@
                           <form>
                           <label for="tagInput" class="form-label">Asset Tag ID :</label>
                           <input type="text" class = "textinput form-control" id="tagInput" required>
-                          <label for="textInput" class="form-label">Description :</label>
-                          <input type="text" class = "textinput form-control" id="descriptionInput" required> 
-                          <label for="textInput" class="form-label">Purchased from :</label>
-                          <input type="text" class = "textinput form-control" id="PurchasedFromInput" required>
-                          <label for="textInput" class="form-label">Brand :</label>
-                          <input type="text" class = "textinput form-control" id="brandInput" required>
-                          <label for="textInput" class="form-label">Model :</label>
-                          <input type="text" class = "textinput form-control" id="modelInput" required>
-                          <label for="textInput" class="form-label">Serial No :</label>
-                          <input type="text" class = "textinput form-control" id="serialInput" required>
-                          <label for="textInput" class="form-label">Site</label>
-                          <input type="text" class = "textinput form-control" id="siteInput" required>
-                          <label for="textInput" class="form-label">Location</label>
-                          <input type="text" class = "textinput form-control" id="locationInput" required>
-                          <label for="textInput" class="form-label">Condition</label>
-                          <input type="text" class = "textinput form-control" id="conditionInput" required>
-                          <label for="textInput" class="form-label">Category</label>
-                          <input type="text" class = "textinput form-control" id="categoryInput" required>
-                          <label for="textInput" class="form-label">Status</label>
-                          <input type="text" class = "textinput form-control" id="statusInput" required>
                           <br>          
                           
                     
@@ -154,39 +134,17 @@
         function printSingleTag()
         {
           const tagInput =  document.getElementById("tagInput");
-          const descriptionInput =  document.getElementById("descriptionInput");
-          const PurchasedFromInput =  document.getElementById("PurchasedFromInput");
-          const brandInput =  document.getElementById("brandInput");
-          const modelInput =  document.getElementById("modelInput");
-          const serialInput =  document.getElementById("serialInput");
-          const siteInput =  document.getElementById("siteInput");
-          const locationInput =  document.getElementById("locationInput");
-          const conditionInput =  document.getElementById("conditionInput");
-          const categoryInput =  document.getElementById("categoryInput");
-          const statusInput =  document.getElementById("statusInput");
-
+          
           const tag = tagInput.value;
-          const description = descriptionInput.value;
-          const purchased = PurchasedFromInput.value;
-          const brand = brandInput.value;
-          const model = modelInput.value;
-          const serial = serialInput.value;
-          const site = siteInput.value;
-          const location = locationInput.value;
-          const condition = conditionInput.value;
-          const category = categoryInput.value;
-          const status = statusInput.value;
-
-          if (tag.trim() === '' && description.trim() === '' && purchased.trim() === '' 
-          && brand.trim() === '' && model.trim() === '' && serial.trim() === '' 
-          && site.trim() === '' && location.trim() === '' && condition.trim() === '' && category.trim() === '' && status.trim() === '' ) {
-              alert('Please fill out all required fields.');
+           
+          if (tag.trim() === '') {
+              alert('Please provide ta-id');
               return; // Stop further processing if a required field is empty
             }
 
           else{
             tag = 
-            printCSV(tag, description, purchased, brand, model, serial, site, location, condition, category, status)
+            printCSV(tag)
           }
           
 
@@ -209,25 +167,11 @@
               csvData.forEach(function(rowData, index) {
               console.log("Item " + (index + 1) + ":");
               console.log("Asset Tag ID: " + rowData.Asset_Tag_ID);
-              console.log("Asset Tag ID: " + rowData.Description);
-              console.log("Asset Tag ID: " + rowData.Purchased_from);
-              console.log("Asset Tag ID: " + rowData.Brand);
-              console.log("Asset Tag ID: " + rowData.Model);
               
                const tag = rowData.Asset_Tag_ID
-               const description = rowData.Description
-               const purchased = rowData.Purchased_from
-               const brand = rowData.Brand
-               const model = rowData.Model
-               const serial = rowData.Serial_No
-               const site = rowData.Site
-               const location = rowData.Location
-               const condition = rowData.Condition
-               const category = rowData.Category
-               const status = rowData.Status
+                
               
-              
-                printCSV(tag, description, purchased, brand, model, serial, site, location, condition, category, status)
+                printCSV(tag)
                  });});
            } 
           else {alert('Please select a CSV file.');
@@ -252,22 +196,21 @@
     });
 }
 
-        function printCSV(tag, description, purchased, brand, model, serial, site, location, condition, category, status) {
+        function printCSV(tag) {
           // This will print data received from ParsedData
           // Loop through the parsed data
           console.log("Now Printing !");
-          console.log("this is what we have received for printing :"+tag+description+purchased);
-
-          const barcodeVariable = `${tag},${description},${purchased},${brand},${model},${serial},${site},${location},${condition},${category},${status}`;
-
+          console.log("this is what we have received for printing :"+tag);
+          
     const zplBarCodeCommand = ` ^XA
-^FO180,50^CF0,40^FD^FDMOH/EGPAF^FS
-^FO40,150^BY2
+^FO250,20^CF0,40^FD^FDEGPAF-MALAWI^FS
+^FO80,120^BY2
 ^BCN,100,Y,N,N
-^FD${barcodeVariable}^FS
-^FO50,220^A0N,30,30^FH\^FDTag:${tag}^FS
-^XZ`;
-                            
+^FD${tag}^FS
+^FO80,240^A0N,30,30^FH\^FDTag:${ tag }^FS
+^XZ
+`;
+                     
 
     // Structure of Code taken from ASSETBOX
     BrowserPrint.getDefaultDevice("printer", function(device) {
